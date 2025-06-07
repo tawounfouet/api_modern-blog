@@ -1,0 +1,42 @@
+[
+    {
+      "model": "content.post",
+      "pk": 1,
+      "fields": {
+        "title": "Getting Started with React 18 and TypeScript",
+        "slug": "getting-started-with-react-18-and-typescript",
+        "content": "# Getting Started with React 18 and TypeScript\n\nReact 18 brings exciting new features to the most popular JavaScript library for building user interfaces. In this comprehensive guide, we'll explore how to set up a new project using React 18 with TypeScript support.\n\n## Prerequisites\n\nBefore we begin, make sure you have the following installed:\n- Node.js (version 14 or higher)\n- npm or yarn package manager\n\n## Setting Up the Project\n\nFirst, let's create a new React project using Vite:\n\n```bash\nnpm create vite@latest my-react-app -- --template react-ts\n```\n\n## Key Features in React 18\n\n### 1. Automatic Batching\n\nReact 18 introduces automatic batching for better performance:\n\n```typescript\nfunction handleClick() {\n  setCount(c => c + 1); // Does not re-render yet\n  setFlag(f => !f);     // Does not re-render yet\n  // React will only re-render once at the end\n}\n```\n\n### 2. Concurrent Features\n\nThe new concurrent renderer enables features like Suspense and streaming server rendering.\n\n## Best Practices\n\n1. Always use TypeScript for better type safety\n2. Implement proper error boundaries\n3. Use functional components with hooks\n4. Follow the React team's recommended patterns\n\n## Conclusion\n\nReact 18 represents a significant step forward in React's evolution, providing developers with powerful new tools for building better user experiences.",
+        "excerpt": "Learn how to set up a new React 18 project with TypeScript and best practices.",
+        "featured_image": "posts/react-typescript.jpeg",
+        "published_at": "2024-01-10T09:00:00Z",
+        "updated_at": "2024-01-10T09:00:00Z",
+        "author": 1,
+        "categories": [1],
+        "tags": [1, 2],
+        "likes_count": 42,
+        "reading_time": 8,
+        "is_featured": true,
+        "is_published": true
+      }
+    },
+    {
+      "model": "content.post",
+      "pk": 2,
+      "fields": {
+        "title": "Docker Deployment Strategies",
+        "slug": "docker-deployment-strategies",
+        "content": "# Docker Deployment Strategies\n\nIn this comprehensive guide, we'll explore different strategies for deploying Docker containers in production environments.\n\n## Blue-Green Deployment\n\nBlue-green deployment is a technique that reduces downtime by running two identical production environments called Blue and Green.\n\n```yaml\nversion: '3'\nservices:\n  blue:\n    image: myapp:1.0\n    ports:\n      - \"8080:80\"\n  green:\n    image: myapp:2.0\n    ports:\n      - \"8081:80\"\n```\n\n## Rolling Updates\n\nRolling updates gradually replace instances of the old version of an application with new ones.\n\n## Canary Deployments\n\nCanary deployments minimize risk by slowly rolling out changes to a small subset of users before deploying to the entire infrastructure.\n\n## Best Practices\n\n1. Always use container health checks\n2. Implement proper monitoring\n3. Use Docker Compose for local development\n4. Follow the principle of immutable infrastructure\n\n## Security Considerations\n\n- Use minimal base images\n- Implement proper access controls\n- Regular security scanning\n- Keep dependencies updated",
+        "excerpt": "Explore different strategies for deploying Docker containers in production.",
+        "featured_image": "posts/docker-deployment.jpeg",
+        "published_at": "2024-01-15T14:30:00Z",
+        "updated_at": "2024-01-15T14:30:00Z",
+        "author": 2,
+        "categories": [2],
+        "tags": [3],
+        "likes_count": 35,
+        "reading_time": 12,
+        "is_featured": true,
+        "is_published": true
+      }
+    }
+  ]

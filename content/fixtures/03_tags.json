@@ -1,0 +1,26 @@
+[
+    {
+      "model": "content.tag",
+      "pk": 1,
+      "fields": {
+        "name": "React",
+        "slug": "react"
+      }
+    },
+    {
+      "model": "content.tag",
+      "pk": 2,
+      "fields": {
+        "name": "TypeScript",
+        "slug": "typescript"
+      }
+    },
+    {
+      "model": "content.tag",
+      "pk": 3,
+      "fields": {
+        "name": "Docker",
+        "slug": "docker"
+      }
+    }
+  ]

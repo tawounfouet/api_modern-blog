@@ -1,0 +1,44 @@
+[
+    {
+      "model": "content.video",
+      "pk": 1,
+      "fields": {
+        "title": "Building a Modern Web App from Scratch",
+        "slug": "building-modern-web-app-from-scratch",
+        "description": "In this comprehensive tutorial, we'll build a modern web application from scratch using React, TypeScript, and Vite. Learn best practices, project structure, and advanced patterns.",
+        "video_url": "https://www.youtube.com/embed/w7ejDZ8SWv8",
+        "thumbnail": "video_thumbnails/modern-web-app.jpeg",
+        "duration": 1200,
+        "published_at": "2024-01-25T15:00:00Z",
+        "updated_at": "2024-01-25T15:00:00Z",
+        "presenter": 1,
+        "categories": [1],
+        "views_count": 342,
+        "likes_count": 28,
+        "is_featured": true,
+        "is_published": true,
+        "transcript": "<h2>Video Transcript</h2>\n\n<p>00:00 - Introduction</p>\n<p>Hello everyone! Today we're going to build a modern web application from scratch.</p>\n\n<p>02:15 - Project Setup</p>\n<p>First, let's create a new project using Vite and configure TypeScript.</p>\n\n<p>05:30 - Component Architecture</p>\n<p>Now, let's discuss how to structure our components for maximum reusability.</p>\n\n<p>10:45 - State Management</p>\n<p>We'll implement state management using React Query and Zustand.</p>\n\n<p>15:00 - Styling and UI</p>\n<p>Let's add some beautiful styles using Tailwind CSS and custom components.</p>"
+      }
+    },
+    {
+      "model": "content.video",
+      "pk": 2,
+      "fields": {
+        "title": "Advanced TypeScript Patterns",
+        "slug": "advanced-typescript-patterns",
+        "description": "Dive deep into advanced TypeScript patterns and techniques. Learn about generics, conditional types, mapped types, and more.",
+        "video_url": "https://www.youtube.com/embed/BCg4U1FzODs",
+        "thumbnail": "video_thumbnails/typescript-patterns.jpeg",
+        "duration": 1800,
+        "published_at": "2024-01-28T15:00:00Z",
+        "updated_at": "2024-01-28T15:00:00Z",
+        "presenter": 1,
+        "categories": [1],
+        "views_count": 256,
+        "likes_count": 45,
+        "is_featured": true,
+        "is_published": true,
+        "transcript": null
+      }
+    }
+  ]

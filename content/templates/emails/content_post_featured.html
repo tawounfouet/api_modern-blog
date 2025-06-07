@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Featured Content - {{ content.title }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #8b4513;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        .featured-badge {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .content {
+            padding: 30px 20px;
+        }
+        .content-preview {
+            border: 2px solid #ff6b35;
+            margin: 20px 0;
+            background: #fff8f0;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .content-title {
+            font-size: 24px;
+            color: #333;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+        .content-meta {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .content-description {
+            color: #555;
+            line-height: 1.8;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            margin: 20px 0;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+        .social-links {
+            margin: 20px 0;
+        }
+        .social-links a {
+            color: #ff6b35;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="featured-badge">⭐ Featured Content</div>
+            <h1>{{ content.title }}</h1>
+            <p>This {{ content_type }} has been featured on {{ site_name }}</p>
+        </div>
+        
+        <div class="content">
+            <p>Great news!</p>
+            
+            <p>We're excited to highlight this exceptional {{ content_type }} that has been selected as featured content:</p>
+            
+            <div class="content-preview">
+                <h2 class="content-title">{{ content.title }}</h2>
+                <div class="content-meta">
+                    {% if content_type == 'post' %}
+                        By {{ content.author.first_name }} {{ content.author.last_name }} • 
+                        {{ content.reading_time }} min read
+                    {% elif content_type == 'podcast' %}
+                        Hosted by {{ content.host.first_name }} {{ content.host.last_name }} • 
+                        {% if content.duration %}{{ content.duration|floatformat:0|div:60 }} min{% endif %}
+                    {% elif content_type == 'video' %}
+                        Presented by {{ content.presenter.first_name }} {{ content.presenter.last_name }} • 
+                        {% if content.duration %}{{ content.duration|floatformat:0|div:60 }} min{% endif %}
+                    {% endif %}
+                </div>
+                {% if content.excerpt or content.description %}
+                <div class="content-description">
+                    {{ content.excerpt|default:content.description|truncatewords:40 }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <center>
+                <a href="{{ site_url }}/{% if content_type == 'post' %}posts{% elif content_type == 'podcast' %}podcasts{% elif content_type == 'video' %}videos{% endif %}/{{ content.slug }}" class="cta-button">
+                    {% if content_type == 'post' %}📖 Read Article{% elif content_type == 'podcast' %}🎧 Listen Now{% elif content_type == 'video' %}📺 Watch Video{% endif %} →
+                </a>
+            </center>
+            
+            <p>This content has been carefully selected for its quality and relevance. We think you'll find it particularly valuable!</p>
+            
+            <div class="social-links">
+                <a href="{{ site_url }}">Visit Website</a> |
+                <a href="{{ site_url }}/{% if content_type == 'post' %}posts{% elif content_type == 'podcast' %}podcasts{% elif content_type == 'video' %}videos{% endif %}">Browse All {{ content_type|capfirst }}s</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; {{ "now"|date:"Y" }} {{ site_name }}. All rights reserved.</p>
+            <p>This email was sent because content was featured on our platform.</p>
+        </div>
+    </div>
+</body>
+</html>

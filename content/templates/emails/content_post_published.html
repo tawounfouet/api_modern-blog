@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Article Published - {{ content.title }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        .content {
+            padding: 30px 20px;
+        }
+        .article-preview {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .article-title {
+            font-size: 24px;
+            color: #333;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+        .article-meta {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .article-excerpt {
+            color: #555;
+            line-height: 1.8;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            margin: 20px 0;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+        .social-links {
+            margin: 20px 0;
+        }
+        .social-links a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 New Article Published!</h1>
+            <p>Fresh content is now available on {{ site_name }}</p>
+        </div>
+        
+        <div class="content">
+            <p>Hi there!</p>
+            
+            <p>We're excited to share a new article that just went live on <strong>{{ site_name }}</strong>:</p>
+            
+            <div class="article-preview">
+                <h2 class="article-title">{{ content.title }}</h2>
+                <div class="article-meta">
+                    By {{ content.author.first_name }} {{ content.author.last_name }} • 
+                    {{ content.reading_time }} min read •
+                    {% for category in content.categories.all %}{{ category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                </div>
+                {% if content.excerpt %}
+                <div class="article-excerpt">
+                    {{ content.excerpt }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <center>
+                <a href="{{ site_url }}/posts/{{ content.slug }}" class="cta-button">
+                    Read Full Article →
+                </a>
+            </center>
+            
+            <p>Don't miss out on our latest insights and stories. Happy reading!</p>
+            
+            <div class="social-links">
+                <a href="{{ site_url }}">Visit Website</a> |
+                <a href="{{ site_url }}/posts">Browse All Articles</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; {{ "now"|date:"Y" }} {{ site_name }}. All rights reserved.</p>
+            <p>This email was sent because a new article was published on our platform.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+[
+    {
+        "model": "content.podcast",
+        "pk": 1,
+        "fields": {
+            "title": "The Future of Web Development",
+            "slug": "future-of-web-development",
+            "description": "Join us for an exciting discussion about upcoming trends in web development for 2024. We'll cover everything from new frameworks to revolutionary tools that are shaping the future of web development.",
+            "audio_file": null,
+            "cloudinary_url": "https://res.cloudinary.com/your-cloud-name/video/upload/v1/podcasts/future-of-web-dev.mp3",
+            "cloudinary_public_id": "podcasts/future-of-web-dev",
+            "duration": 1800,
+            "cover_image": null,
+            "cover_image_cloudinary_public_id": "podcast_covers/web-dev-future",
+            "cloudinary_cover_image": "image/upload/v1/podcast_covers/original/web-dev-future.jpg",
+            "cloudinary_cover_image_large": "image/upload/c_limit,w_800,q_auto,f_auto/v1/podcast_covers/large/web-dev-future.jpg",
+            "cloudinary_cover_image_thumbnail": "image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1/podcast_covers/thumbnails/web-dev-future.jpg",
+            "published_at": "2024-01-20T10:00:00Z",
+            "updated_at": "2024-01-20T10:00:00Z",
+            "host": 1,
+            "guests": [],
+            "categories": [
+                1
+            ],
+            "plays_count": 156,
+            "is_featured": true,
+            "is_published": true,
+            "is_processed": true,
+            "transcript": "<h2>Episode Transcript</h2>\n\n<p><strong>Sarah:</strong> Welcome to another episode of Tech Talk! I'm your host Sarah Johnson, and today we're diving into the future of web development.</p>\n\n<p><strong>Alex:</strong> Thanks for having me, Sarah! I'm excited to share my insights about where the industry is heading.</p>\n\n<p><strong>Sarah:</strong> Let's start with the biggest trends you're seeing in web development right now.</p>\n\n<p><strong>Alex:</strong> The rise of AI-powered development tools is definitely the biggest trend. We're seeing tools that can help with code generation, testing, and even design.</p>\n\n<p><strong>Sarah:</strong> That's fascinating! How do you think this will impact developers?</p>\n\n<p><strong>Alex:</strong> I believe it will allow developers to focus more on solving complex problems rather than writing boilerplate code.</p>",
+            "season": 1,
+            "episode": 1
+        }
+    },
+    {
+        "model": "content.podcast",
+        "pk": 2,
+        "fields": {
+            "title": "Building Scalable Applications",
+            "slug": "building-scalable-applications",
+            "description": "Learn about the best practices and patterns for building applications that can scale to millions of users. We discuss architecture, tools, and real-world examples.",
+            "audio_file": null,
+            "cloudinary_url": "https://res.cloudinary.com/your-cloud-name/video/upload/v1/podcasts/scalable-apps.mp3",
+            "cloudinary_public_id": "podcasts/scalable-apps",
+            "duration": 2400,
+            "cover_image": null,
+            "cover_image_cloudinary_public_id": "podcast_covers/scalable-apps",
+            "cloudinary_cover_image": "image/upload/v1/podcast_covers/original/scalable-apps.jpg",
+            "cloudinary_cover_image_large": "image/upload/c_limit,w_800,q_auto,f_auto/v1/podcast_covers/large/scalable-apps.jpg",
+            "cloudinary_cover_image_thumbnail": "image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1/podcast_covers/thumbnails/scalable-apps.jpg",
+            "published_at": "2024-01-25T10:00:00Z",
+            "updated_at": "2024-01-25T10:00:00Z",
+            "host": 2,
+            "guests": [],
+            "categories": [
+                2
+            ],
+            "plays_count": 203,
+            "is_featured": true,
+            "is_published": true,
+            "is_processed": true,
+            "transcript": "",
+            "season": 1,
+            "episode": 2
+        }
+    },
+    {
+        "model": "content.podcast",
+        "pk": 3,
+        "fields": {
+            "title": "Introduction to Machine Learning",
+            "slug": "introduction-to-machine-learning",
+            "description": "A beginner-friendly introduction to machine learning concepts, tools, and practical applications. Perfect for developers looking to expand their skillset.",
+            "audio_file": null,
+            "cloudinary_url": "https://res.cloudinary.com/your-cloud-name/video/upload/v1/podcasts/ml-intro.mp3",
+            "cloudinary_public_id": "podcasts/ml-intro",
+            "duration": 2100,
+            "cover_image": null,
+            "cover_image_cloudinary_public_id": "podcast_covers/ml-intro",
+            "cloudinary_cover_image": "image/upload/v1/podcast_covers/original/ml-intro.jpg",
+            "cloudinary_cover_image_large": "image/upload/c_limit,w_800,q_auto,f_auto/v1/podcast_covers/large/ml-intro.jpg",
+            "cloudinary_cover_image_thumbnail": "image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1/podcast_covers/thumbnails/ml-intro.jpg",
+            "published_at": "2024-02-01T10:00:00Z",
+            "updated_at": "2024-02-01T10:00:00Z",
+            "host": 1,
+            "guests": [
+                3
+            ],
+            "categories": [
+                1
+            ],
+            "plays_count": 142,
+            "is_featured": false,
+            "is_published": true,
+            "is_processed": true,
+            "transcript": "",
+            "season": 1,
+            "episode": 3
+        }
+    }
+]

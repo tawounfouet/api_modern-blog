@@ -1,0 +1,46 @@
+[
+    {
+      "model": "content.podcast",
+      "pk": 1,
+      "fields": {
+        "title": "The Future of Web Development",
+        "slug": "future-of-web-development",
+        "description": "Join us for an exciting discussion about upcoming trends in web development for 2024. We'll cover everything from new frameworks to revolutionary tools that are shaping the future of web development.",
+        "audio_file": "podcasts/future-of-web-dev.mp3",
+        "duration": 1800,
+        "cover_image": "podcast_covers/web-dev-future.jpeg",
+        "published_at": "2024-01-20T10:00:00Z",
+        "updated_at": "2024-01-20T10:00:00Z",
+        "host": 1,
+        "categories": [1],
+        "plays_count": 156,
+        "is_featured": true,
+        "is_published": true,
+        "transcript": "<h2>Episode Transcript</h2>\n\n<p><strong>Sarah:</strong> Welcome to another episode of Tech Talk! I'm your host Sarah Johnson, and today we're diving into the future of web development.</p>\n\n<p><strong>Alex:</strong> Thanks for having me, Sarah! I'm excited to share my insights about where the industry is heading.</p>\n\n<p><strong>Sarah:</strong> Let's start with the biggest trends you're seeing in web development right now.</p>\n\n<p><strong>Alex:</strong> The rise of AI-powered development tools is definitely the biggest trend. We're seeing tools that can help with code generation, testing, and even design.</p>\n\n<p><strong>Sarah:</strong> That's fascinating! How do you think this will impact developers?</p>\n\n<p><strong>Alex:</strong> I believe it will allow developers to focus more on solving complex problems rather than writing boilerplate code.</p>",
+        "season": 1,
+        "episode": 1
+      }
+    },
+    {
+      "model": "content.podcast",
+      "pk": 2,
+      "fields": {
+        "title": "Building Scalable Applications",
+        "slug": "building-scalable-applications",
+        "description": "Learn about the best practices and patterns for building applications that can scale to millions of users. We discuss architecture, tools, and real-world examples.",
+        "audio_file": "podcasts/scalable-apps.mp3",
+        "duration": 2400,
+        "cover_image": "podcast_covers/scalable-apps.jpeg",
+        "published_at": "2024-01-25T10:00:00Z",
+        "updated_at": "2024-01-25T10:00:00Z",
+        "host": 2,
+        "categories": [2],
+        "plays_count": 203,
+        "is_featured": true,
+        "is_published": true,
+        "transcript": null,
+        "season": 1,
+        "episode": 2
+      }
+    }
+  ]

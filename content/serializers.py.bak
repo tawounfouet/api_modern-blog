@@ -1,0 +1,366 @@
+# content/serializers.py
+from rest_framework import serializers
+from authentication.models import User
+from django.utils.text import slugify
+from .models import Category,class PodcastListSerializer(serializers.ModelSerializer):
+class PodcastDetailSerializer(serializers.ModelSerializer):
+    host = UserProfileSerializer(source="host", read_only=True)
+    guests = UserProfileSerializer(many=True, read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
+    cover_image = serializers.SerializerMethodField()ost = UserProfileSerializer(source="host", read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
+    cover_image = serializers.SerializerMethodField(), UserProfile, Post, Comment, Podcast, Video
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "bio",
+            "avatar",
+            "location",
+        ]
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    """
+    Ce serializer est maintenu pour la compatibilité avec le code existant, 
+    mais utilise directement les données du modèle User.
+    """
+    # Ces champs sont directement disponibles dans le modèle User
+    username = serializers.CharField(read_only=True)
+    email = serializers.EmailField(read_only=True)
+    first_name = serializers.CharField(read_only=True)
+    last_name = serializers.CharField(read_only=True)
+    
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "avatar",
+            "bio",
+            "website",
+            "twitter",
+            "github",
+            "linkedin",
+            "role",
+        ]
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ["id", "name", "slug", "description"]
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ["id", "name", "slug"]
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    author = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ["id", "author", "content", "created_at"]
+
+
+class PostListSerializer(serializers.ModelSerializer):
+    author = UserProfileSerializer(source="author", read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
+    featured_image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Post
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "excerpt",
+            "featured_image",
+            "image_urls",  # Ajout de ce champ
+            "published_at",
+            "author",
+            "categories",
+            "likes_count",
+            "reading_time",
+            "is_featured",
+        ]
+
+    # def get_featured_image(self, obj):
+    #     """Retourne un dictionnaire avec les URLs des différentes versions de l'image"""
+    #     if hasattr(obj, "image_urls"):
+    #         return obj.image_urls
+
+    #     # Fallback pour l'ancienne méthode
+    #     if obj.featured_image:
+    #         return {
+    #             "original": obj.featured_image.url,
+    #             "large": obj.featured_image.url,
+    #             "thumbnail": obj.featured_image.url,
+    #         }
+
+    #     return {"original": "", "large": "", "thumbnail": ""}
+    def get_featured_image(self, obj):
+        """Retourne l'URL de l'image principale pour compatibilité"""
+        image_urls = obj.image_urls
+        return image_urls.get("large") or image_urls.get("original") or ""
+
+    def get_image_urls(self, obj):
+        """Retourne un dictionnaire avec les URLs des différentes versions de l'image"""
+        return obj.image_urls
+
+
+class PostDetailSerializer(serializers.ModelSerializer):
+    author = UserProfileSerializer(source="author", read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
+    tags = TagSerializer(many=True, read_only=True)
+    comments = CommentSerializer(many=True, read_only=True)
+    featured_image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Post
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "content",
+            "excerpt",
+            "featured_image",
+            "image_urls",  # Ajout de ce champ
+            "published_at",
+            "updated_at",
+            "author",
+            "categories",
+            "tags",
+            "comments",
+            "likes_count",
+            "reading_time",
+            "is_featured",
+            "is_published",
+        ]
+
+    # def get_featured_image(self, obj):
+    #     """Retourne un dictionnaire avec les URLs des différentes versions de l'image"""
+    #     if hasattr(obj, "image_urls"):
+    #         return obj.image_urls
+
+    #     # Fallback pour l'ancienne méthode
+    #     if obj.featured_image:
+    #         return {
+    #             "original": obj.featured_image.url,
+    #             "large": obj.featured_image.url,
+    #             "thumbnail": obj.featured_image.url,
+    #         }
+
+    #     return {"original": "", "large": "", "thumbnail": ""}
+    def get_featured_image(self, obj):
+        """Retourne l'URL de l'image principale pour compatibilité"""
+        image_urls = obj.image_urls
+        return image_urls.get("large") or image_urls.get("original") or ""
+
+    def get_image_urls(self, obj):
+        """Retourne un dictionnaire avec les URLs des différentes versions de l'image"""
+        return obj.image_urls
+
+
+class PodcastListSerializer(serializers.ModelSerializer):
+    host = UserProfileSerializer(source="host.profile", read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
+    audio_url = serializers.SerializerMethodField()
+    cover_image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Podcast
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "description",
+            "cover_image",
+            "cover_image_urls",
+            "audio_url",
+            "duration",
+            "published_at",
+            "host",
+            "categories",
+            "plays_count",
+            "is_featured",
+            "season",
+            "episode",
+            "is_processed",
+        ]
+
+    def get_audio_url(self, obj):
+        return obj.audio_url
+
+    def get_cover_image(self, obj):
+        """Retourne un dictionnaire avec les URLs des différentes versions de l'image de couverture"""
+        if obj.cloudinary_cover_image:
+            return {
+                "original": str(obj.cloudinary_cover_image.url),
+                "large": str(
+                    obj.cloudinary_cover_image_large.url
+                    if obj.cloudinary_cover_image_large
+                    else obj.cloudinary_cover_image.url
+                ),
+                "thumbnail": str(
+                    obj.cloudinary_cover_image_thumbnail.url
+                    if obj.cloudinary_cover_image_thumbnail
+                    else obj.cloudinary_cover_image.url
+                ),
+            }
+        elif obj.cover_image:
+            return {
+                "original": obj.cover_image.url,
+                "large": obj.cover_image.url,
+                "thumbnail": obj.cover_image.url,
+            }
+        return {"original": "", "large": "", "thumbnail": ""}
+
+
+class PodcastDetailSerializer(serializers.ModelSerializer):
+    host = UserProfileSerializer(source="host.profile", read_only=True)
+    guests = UserProfileSerializer(source="guests.profile", many=True, read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
+    audio_url = serializers.SerializerMethodField()
+    cover_image_urls = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Podcast
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "description",
+            "cover_image",
+            "cover_image_urls",
+            "audio_url",
+            "duration",
+            "published_at",
+            "updated_at",
+            "host",
+            "guests",
+            "categories",
+            "plays_count",
+            "is_featured",
+            "transcript",
+            "season",
+            "episode",
+            "is_processed",
+        ]
+
+    def get_audio_url(self, obj):
+        return obj.audio_url
+
+    def get_cover_image_urls(self, obj):
+        """Retourne un dictionnaire avec les URLs des différentes versions de l'image de couverture"""
+        if obj.cloudinary_cover_image:
+            return {
+                "original": str(obj.cloudinary_cover_image.url),
+                "large": str(
+                    obj.cloudinary_cover_image_large.url
+                    if obj.cloudinary_cover_image_large
+                    else obj.cloudinary_cover_image.url
+                ),
+                "thumbnail": str(
+                    obj.cloudinary_cover_image_thumbnail.url
+                    if obj.cloudinary_cover_image_thumbnail
+                    else obj.cloudinary_cover_image.url
+                ),
+            }
+        elif obj.cover_image:
+            return {
+                "original": obj.cover_image.url,
+                "large": obj.cover_image.url,
+                "thumbnail": obj.cover_image.url,
+            }
+        return {"original": "", "large": "", "thumbnail": ""}
+
+
+class VideoListSerializer(serializers.ModelSerializer):
+    presenter = UserProfileSerializer(source="presenter.profile", read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Video
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "description",
+            "thumbnail",
+            "duration",
+            "published_at",
+            "presenter",
+            "categories",
+            "views_count",
+            "likes_count",
+            "is_featured",
+        ]
+
+
+class VideoDetailSerializer(serializers.ModelSerializer):
+    presenter = UserProfileSerializer(source="presenter.profile", read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Video
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "description",
+            "video_url",
+            "thumbnail",
+            "duration",
+            "published_at",
+            "updated_at",
+            "presenter",
+            "categories",
+            "views_count",
+            "likes_count",
+            "is_featured",
+            "is_published",
+            "transcript",
+        ]
+
+
+class PodcastUploadSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(required=True)
+    description = serializers.CharField(required=True)
+    audio_file = serializers.FileField(required=True)
+
+    class Meta:
+        model = Podcast
+        fields = [
+            "title",
+            "description",
+            "audio_file",
+            "cover_image",
+            "season",
+            "episode",
+            "categories",
+        ]
+
+    def create(self, validated_data):
+        # Générer le slug à partir du titre
+        validated_data["slug"] = slugify(validated_data["title"])
+
+        # Définir l'hôte comme l'utilisateur actuel
+        validated_data["host"] = self.context["request"].user
+
+        # Créer le podcast (le signal post_save se chargera de l'upload Cloudinary)
+        podcast = super().create(validated_data)
+        return podcast

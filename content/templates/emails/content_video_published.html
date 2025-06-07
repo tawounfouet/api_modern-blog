@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Podcast Episode - {{ content.title }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        .content {
+            padding: 30px 20px;
+        }
+        .podcast-preview {
+            border-left: 4px solid #f5576c;
+            padding-left: 20px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .podcast-title {
+            font-size: 24px;
+            color: #333;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+        .podcast-meta {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .podcast-description {
+            color: #555;
+            line-height: 1.8;
+        }
+        .duration-badge {
+            display: inline-block;
+            background: #f5576c;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            margin: 20px 0;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+        .social-links {
+            margin: 20px 0;
+        }
+        .social-links a {
+            color: #f5576c;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎧 New Podcast Episode!</h1>
+            <p>A fresh episode is now available on {{ site_name }}</p>
+        </div>
+        
+        <div class="content">
+            <p>Hello podcast lovers!</p>
+            
+            <p>We've just released a new episode that you won't want to miss:</p>
+            
+            <div class="podcast-preview">
+                <h2 class="podcast-title">{{ content.title }}</h2>
+                <div class="podcast-meta">
+                    Hosted by {{ content.host.first_name }} {{ content.host.last_name }} • 
+                    <span class="duration-badge">
+                        {% if content.duration %}
+                            {{ content.duration|floatformat:0|div:60 }} min
+                        {% else %}
+                            Episode
+                        {% endif %}
+                    </span>
+                    {% if content.season and content.episode %}
+                        • Season {{ content.season }}, Episode {{ content.episode }}
+                    {% endif %}
+                </div>
+                {% if content.description %}
+                <div class="podcast-description">
+                    {{ content.description|truncatewords:50 }}
+                </div>
+                {% endif %}
+                
+                {% if content.guests.all %}
+                <div style="margin-top: 15px;">
+                    <strong>Featured guests:</strong>
+                    {% for guest in content.guests.all %}
+                        {{ guest.first_name }} {{ guest.last_name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            
+            <center>
+                <a href="{{ site_url }}/podcasts/{{ content.slug }}" class="cta-button">
+                    🎧 Listen Now →
+                </a>
+            </center>
+            
+            <p>Tune in for insightful conversations, expert interviews, and thought-provoking discussions!</p>
+            
+            <div class="social-links">
+                <a href="{{ site_url }}">Visit Website</a> |
+                <a href="{{ site_url }}/podcasts">Browse All Episodes</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; {{ "now"|date:"Y" }} {{ site_name }}. All rights reserved.</p>
+            <p>This email was sent because a new podcast episode was published on our platform.</p>
+        </div>
+    </div>
+</body>
+</html>

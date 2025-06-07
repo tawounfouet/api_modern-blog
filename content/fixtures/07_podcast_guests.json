@@ -1,0 +1,18 @@
+[
+    {
+      "model": "content.podcast_guests",
+      "pk": 1,
+      "fields": {
+        "podcast": 1,
+        "user": 2
+      }
+    },
+    {
+      "model": "content.podcast_guests",
+      "pk": 2,
+      "fields": {
+        "podcast": 2,
+        "user": 1
+      }
+    }
+  ]

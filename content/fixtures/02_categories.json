@@ -1,0 +1,29 @@
+[
+    {
+      "model": "content.category",
+      "pk": 1,
+      "fields": {
+        "name": "Web Development",
+        "slug": "web-development",
+        "description": "Articles about web development technologies and best practices"
+      }
+    },
+    {
+      "model": "content.category",
+      "pk": 2,
+      "fields": {
+        "name": "DevOps",
+        "slug": "devops",
+        "description": "Content related to DevOps practices and tools"
+      }
+    },
+    {
+      "model": "content.category",
+      "pk": 3,
+      "fields": {
+        "name": "Mobile Development",
+        "slug": "mobile-development",
+        "description": "Mobile app development tutorials and insights"
+      }
+    }
+  ]

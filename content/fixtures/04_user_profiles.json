@@ -1,0 +1,30 @@
+[
+    {
+      "model": "content.userprofile",
+      "pk": 1,
+      "fields": {
+        "user": 1,
+        "avatar": "avatars/sarah.jpeg",
+        "bio": "Senior Software Engineer passionate about web technologies",
+        "website": "https://sarahjohnson.dev",
+        "twitter": "https://twitter.com/sarah_tech",
+        "github": "https://github.com/sarahj",
+        "linkedin": "https://linkedin.com/in/sarahj",
+        "role": "author"
+      }
+    },
+    {
+      "model": "content.userprofile",
+      "pk": 2,
+      "fields": {
+        "user": 2,
+        "avatar": "avatars/alex.jpeg",
+        "bio": "Full-stack developer and tech educator",
+        "website": "https://alexchen.dev",
+        "twitter": "https://twitter.com/alex_dev",
+        "github": "https://github.com/alexc",
+        "linkedin": "",
+        "role": "author"
+      }
+    }
+  ]
