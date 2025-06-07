@@ -58,9 +58,9 @@ __pycache__/
 *.pyc
 
 # Django
-db.sqlite3
-staticfiles/
-media/
+#db.sqlite3
+#staticfiles/
+#media/
 
 # Logs
 logs/
