@@ -32,12 +32,11 @@ SECRET_KEY = os.getenv(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "True").lower() == "true"
-#DEBUG = True
+# DEBUG = os.getenv("DEBUG", "True").lower() == "true"
+DEBUG = False
 
-#ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+# ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
-
 
 
 # Application definition
@@ -77,6 +76,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",  # Ajouter CORS middleware
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -95,10 +95,10 @@ MIDDLEWARE = [
 
 
 # CORS Configuration
-CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', 'False') == 'True'
-CORS_ALLOW_CREDENTIALS = os.getenv('CORS_ALLOW_CREDENTIALS', 'False') == 'True'
-CORS_EXPOSED_HEADERS = os.getenv('CORS_EXPOSED_HEADERS', '').split(',')
-CORS_ALLOW_HEADERS = os.getenv('CORS_ALLOW_HEADERS', '').split(',')
+CORS_ALLOW_ALL_ORIGINS = os.getenv("CORS_ALLOW_ALL_ORIGINS", "False") == "True"
+CORS_ALLOW_CREDENTIALS = os.getenv("CORS_ALLOW_CREDENTIALS", "False") == "True"
+CORS_EXPOSED_HEADERS = os.getenv("CORS_EXPOSED_HEADERS", "").split(",")
+CORS_ALLOW_HEADERS = os.getenv("CORS_ALLOW_HEADERS", "").split(",")
 
 
 # Configuration de DRF
@@ -256,6 +256,10 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+# WhiteNoise configuration - using simple storage to avoid manifest issues
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+WHITENOISE_MAX_AGE = 31536000  # 1 year in seconds
 
 
 # Configuration des médias
