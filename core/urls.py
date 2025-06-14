@@ -22,11 +22,14 @@ from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    path("", RedirectView.as_view(url='/api/', permanent=False), name='index'),  # Redirection depuis la racine vers /api/
+    path(
+        "", RedirectView.as_view(url="/api/", permanent=False), name="index"
+    ),  # Redirection depuis la racine vers /api/
     path("admin/", admin.site.urls),
     path("api/", include("content.urls")),
     path("api/auth/", include("authentication.urls")),  # Authentication URLs
     path("api-auth/", include("rest_framework.urls")),
+    path("ckeditor5/", include("django_ckeditor_5.urls")),  # CKEditor5 URLs
 ]
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

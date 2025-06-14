@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
 from cloudinary.models import CloudinaryField
+from django_ckeditor_5.fields import CKEditor5Field
 import cloudinary
 import logging
 
@@ -102,7 +103,7 @@ class UserProfile(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
-    content = models.TextField()
+    content = CKEditor5Field("Content", config_name="extends", blank=True, null=True)
     excerpt = models.TextField(blank=True)
 
     # Champ pour l'ancienne méthode d'upload (conservé pour compatibilité)
@@ -239,7 +240,7 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    content = models.TextField()
+    content = CKEditor5Field("Content", config_name="comment", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -249,7 +250,12 @@ class Comment(models.Model):
 class Podcast(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
-    description = models.TextField()
+    description = models.TextField(
+        blank=True, null=True, help_text="Description du podcast, peut contenir des liens et du texte enrichi"
+    )
+    # description = CKEditor5Field(
+    #     "Description", config_name="extends", blank=True, null=True
+    # )
 
     # Utiliser FileField pour l'upload temporaire
     audio_file = models.FileField(
@@ -333,7 +339,9 @@ class Podcast(models.Model):
     episode = models.PositiveIntegerField(default=1)
     is_processed = models.BooleanField(default=False)
     is_published = models.BooleanField(default=True)
-    transcript = models.TextField(blank=True)
+    transcript = CKEditor5Field(
+        "Transcript", config_name="extends", blank=True, null=True
+    )
 
     def __str__(self):
         return self.title
@@ -415,7 +423,9 @@ class Podcast(models.Model):
 class Video(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
-    description = models.TextField()
+    description = CKEditor5Field(
+        "Description", config_name="extends", blank=True, null=True
+    )
     video_url = models.URLField()
     thumbnail = models.ImageField(upload_to="video_thumbnails/", blank=True, null=True)
     duration = models.PositiveIntegerField(

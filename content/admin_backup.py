@@ -12,28 +12,14 @@ from helpers._cloudinary.audio_service import CloudinaryAudioService
 # Formulaires personnalisés avec CKEditor5
 class PostAdminForm(forms.ModelForm):
     """Formulaire personnalisé pour Post avec CKEditor5"""
-
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["content"].required = False
-
+        
     class Meta:
         model = Post
-        fields = [
-            "title",
-            "slug",
-            "content",
-            "excerpt",
-            "featured_image",
-            "published_at",
-            "author",
-            "categories",
-            "tags",
-            "is_featured",
-            "is_published",
-            "meta_title",
-            "meta_description",
-        ]
+        fields = "__all__"
         widgets = {
             "content": CKEditor5Widget(
                 attrs={"class": "django_ckeditor_5"}, config_name="extends"
@@ -43,14 +29,14 @@ class PostAdminForm(forms.ModelForm):
 
 class CommentAdminForm(forms.ModelForm):
     """Formulaire personnalisé pour Comment avec CKEditor5"""
-
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["content"].required = False
-
+        
     class Meta:
         model = Comment
-        fields = ["post", "author", "content"]
+        fields = "__all__"
         widgets = {
             "content": CKEditor5Widget(
                 attrs={"class": "django_ckeditor_5"}, config_name="comment"
@@ -60,33 +46,19 @@ class CommentAdminForm(forms.ModelForm):
 
 class PodcastAdminForm(forms.ModelForm):
     """Formulaire personnalisé pour Podcast avec CKEditor5"""
-
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["description"].required = False
         self.fields["transcript"].required = False
-
+        
     class Meta:
         model = Podcast
-        fields = [
-            "title",
-            "slug",
-            "description",
-            "audio_file",
-            "cover_image",
-            "duration",
-            "published_at",
-            "host",
-            "guests",
-            "categories",
-            "tags",
-            "is_featured",
-            "season",
-            "episode",
-            "is_published",
-            "transcript",
-        ]
+        fields = "__all__"
         widgets = {
+            "description": CKEditor5Widget(
+                attrs={"class": "django_ckeditor_5"}, config_name="extends"
+            ),
             "transcript": CKEditor5Widget(
                 attrs={"class": "django_ckeditor_5"}, config_name="extends"
             ),
@@ -95,26 +67,14 @@ class PodcastAdminForm(forms.ModelForm):
 
 class VideoAdminForm(forms.ModelForm):
     """Formulaire personnalisé pour Video avec CKEditor5"""
-
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["description"].required = False
-
+        
     class Meta:
         model = Video
-        fields = [
-            "title",
-            "slug",
-            "description",
-            "video_url",
-            "thumbnail",
-            "duration",
-            "published_at",
-            "presenter",
-            "categories",
-            "is_featured",
-            "is_published",
-        ]
+        fields = "__all__"
         widgets = {
             "description": CKEditor5Widget(
                 attrs={"class": "django_ckeditor_5"}, config_name="extends"
@@ -258,7 +218,7 @@ class PodcastAdmin(admin.ModelAdmin):
         "season",
         "categories",
     )
-    search_fields = ("title", "description", "tags")
+    search_fields = ("title", "description", "tags")  # Add tags to search
     prepopulated_fields = {"slug": ("title",)}
     date_hierarchy = "published_at"
     filter_horizontal = ("guests", "categories")
@@ -273,13 +233,12 @@ class PodcastAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Informations générales",
-            {"fields": ("title", "slug", "description", "tags")},
+            {"fields": ("title", "slug", "description", "tags")},  # Add tags field
         ),
         ("Fichiers", {"fields": ("audio_file", "cover_image")}),
         ("Publication", {"fields": ("is_published", "is_featured", "published_at")}),
         ("Métadonnées", {"fields": ("season", "episode", "duration", "plays_count")}),
         ("Relations", {"fields": ("host", "guests", "categories")}),
-        ("Transcript", {"fields": ("transcript",)}),
         (
             "Cloudinary (lecture seule)",
             {
