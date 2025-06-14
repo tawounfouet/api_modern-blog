@@ -7,6 +7,8 @@ djangorestframework==3.16.0
 pillow==11.2.1
 sqlparse==0.5.3
 django-ckeditor-5==0.2.12
+django-admin-interface==0.28.8
+django-colorfield==0.11.0
 djangorestframework-simplejwt==5.0.0
 djoser==2.2.2
 django-allauth==0.57.0

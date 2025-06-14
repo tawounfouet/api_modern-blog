@@ -42,6 +42,9 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 # Application definition
 
 INSTALLED_APPS = [
+    # Custom Admin Interface (must be before django.contrib.admin)
+    "admin_interface",
+    "colorfield",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -382,6 +385,83 @@ SOCIALACCOUNT_PROVIDERS = {
             "user:email",
         ],
     },
+}
+
+# ============================================================================
+# ADMIN INTERFACE CONFIGURATION
+# ============================================================================
+
+# Configuration de l'interface admin personnalisée
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILKY_PYTHON_PROFILER = True
+
+# Configuration des thèmes et couleurs
+ADMIN_INTERFACE = {
+    # Titre de l'admin
+    "TITLE": "Modern Blog Admin",
+    "TITLE_COLOR": "#667eea",
+    # Configuration du header
+    "HEADER_COLOR": "#667eea",
+    "HEADER_TITLE_COLOR": "#ffffff",
+    "HEADER_LINK_COLOR": "#ffffff",
+    "HEADER_LINK_HOVER_COLOR": "#e0e0e0",
+    # Configuration du menu latéral
+    "MENU_COLOR": "#2c3e50",
+    "MENU_TITLE_COLOR": "#ffffff",
+    "MENU_LINK_COLOR": "#ecf0f1",
+    "MENU_LINK_HOVER_COLOR": "#3498db",
+    "MENU_ICON_COLOR": "#bdc3c7",
+    # Configuration générale
+    "LOGO": "",  # Vous pouvez ajouter un logo ici
+    "FAVICON": "",  # Vous pouvez ajouter un favicon ici
+    "CSS": """
+        /* Force l'affichage du logo */
+        #site-name .logo {
+            display: inline-block !important;
+            max-height: 40px;
+            max-width: 150px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        /* Améliore l'apparence du header avec le logo */
+        #site-name a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        /* Style pour le titre à côté du logo */
+        #site-name span {
+            font-size: 18px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+    """,  # CSS personnalisé pour forcer l'affichage du logo
+    # Configuration des boutons
+    "BUTTON_COLOR": "#667eea",
+    "BUTTON_HOVER_COLOR": "#5a6fd8",
+    # Configuration des formulaires
+    "FORM_SUBMIT_ROW_COLOR": "#f8f9fa",
+    "FORM_BUTTON_COLOR": "#667eea",
+    "FORM_BUTTON_HOVER_COLOR": "#5a6fd8",
+    # Configuration du pied de page
+    "FOOTER_COLOR": "#34495e",
+    "FOOTER_LINK_COLOR": "#ffffff",
+    "FOOTER_LINK_HOVER_COLOR": "#3498db",
+    # Configuration responsive
+    "RESPONSIVE": True,
+    # Configuration du changelist
+    "LIST_FILTER_STICKY": True,
+    "LIST_PER_PAGE": 25,
+    # Configuration du thème sombre
+    "THEME": "default",  # 'default', 'dark-green', 'blue', etc.
+    # Personnalisation avancée
+    "ENVIRONMENT": "Modern Blog Platform",
+    "ENVIRONMENT_COLOR": "#28a745",
+    "LANGUAGE_CHOOSER": False,
+    "SHOW_RECENT_ACTIONS": True,
+    "SHOW_RECENT_ACTIONS_MAX": 10,
 }
 
 # ============================================================================
