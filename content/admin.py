@@ -140,7 +140,7 @@ class PodcastAdmin(admin.ModelAdmin):
         "season",
         "categories",
     )
-    search_fields = ("title", "description")
+    search_fields = ("title", "description", "tags")  # Add tags to search
     prepopulated_fields = {"slug": ("title",)}
     date_hierarchy = "published_at"
     filter_horizontal = ("guests", "categories")
@@ -150,6 +150,30 @@ class PodcastAdmin(admin.ModelAdmin):
         "cover_image_cloudinary_public_id",
         "display_audio_player",
         "display_cloudinary_cover_images",
+    )
+
+    fieldsets = (
+        (
+            "Informations générales",
+            {"fields": ("title", "slug", "description", "tags")},  # Add tags field
+        ),
+        ("Fichiers", {"fields": ("audio_file", "cover_image")}),
+        ("Publication", {"fields": ("is_published", "is_featured", "published_at")}),
+        ("Métadonnées", {"fields": ("season", "episode", "duration", "plays_count")}),
+        ("Relations", {"fields": ("host", "guests", "categories")}),
+        (
+            "Cloudinary (lecture seule)",
+            {
+                "fields": (
+                    "cloudinary_url",
+                    "cloudinary_public_id",
+                    "cover_image_cloudinary_public_id",
+                    "display_audio_player",
+                    "display_cloudinary_cover_images",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
     )
 
     def display_audio_player(self, obj):

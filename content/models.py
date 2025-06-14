@@ -320,6 +320,13 @@ class Podcast(models.Model):
         settings.AUTH_USER_MODEL, related_name="podcast_appearances", blank=True
     )
     categories = models.ManyToManyField(Category, related_name="podcasts")
+
+    # Nouveau champ tags
+    tags = models.TextField(
+        blank=True,
+        help_text="Liste de tags séparés par des virgules pour le référencement",
+    )
+
     plays_count = models.PositiveIntegerField(default=0)
     is_featured = models.BooleanField(default=False)
     season = models.PositiveIntegerField(default=1)
@@ -393,6 +400,16 @@ class Podcast(models.Model):
     def audio_url(self):
         """Retourne l'URL du fichier audio"""
         return self.cloudinary_url or (self.audio_file.url if self.audio_file else "")
+
+    def get_tags_list(self):
+        """Retourne la liste des tags sous forme de liste Python"""
+        if self.tags:
+            return [tag.strip() for tag in self.tags.split(",") if tag.strip()]
+        return []
+
+    def set_tags_list(self, tags_list):
+        """Définit les tags à partir d'une liste Python"""
+        self.tags = ", ".join(tags_list) if tags_list else ""
 
 
 class Video(models.Model):

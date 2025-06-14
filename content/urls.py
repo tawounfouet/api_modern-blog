@@ -8,6 +8,7 @@ from .views import (
     PodcastViewSet,
     VideoViewSet,
     CommentViewSet,
+    PodcastTagsView,
 )
 
 router = DefaultRouter()
@@ -23,8 +24,6 @@ from . import views
 
 urlpatterns = [
     path("", include(router.urls)),
-    
-    
-    path('test-celery/', views.test_celery, name='test-celery'),
-
+    path("podcasts/tags/", PodcastTagsView.as_view(), name="podcast-tags"),
+    path("test-celery/", views.test_celery, name="test-celery"),
 ]

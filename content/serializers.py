@@ -234,6 +234,7 @@ class PodcastListSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
     cover_image = serializers.SerializerMethodField()
     cover_image_urls = serializers.SerializerMethodField()
+    tags_list = serializers.SerializerMethodField()
 
     class Meta:
         model = Podcast
@@ -248,6 +249,8 @@ class PodcastListSerializer(serializers.ModelSerializer):
             "published_at",
             "host",
             "categories",
+            "tags",
+            "tags_list",
             "plays_count",
             "is_featured",
             "season",
@@ -297,6 +300,10 @@ class PodcastListSerializer(serializers.ModelSerializer):
             }
         return {"original": "", "large": "", "thumbnail": ""}
 
+    def get_tags_list(self, obj):
+        """Retourne les tags sous forme de liste pour l'API"""
+        return obj.get_tags_list()
+
 
 class PodcastDetailSerializer(serializers.ModelSerializer):
     host = UserProfileSerializer(source="host.profile", read_only=True)
@@ -305,6 +312,7 @@ class PodcastDetailSerializer(serializers.ModelSerializer):
     cover_image = serializers.SerializerMethodField()
     cover_image_urls = serializers.SerializerMethodField()
     audio_url = serializers.SerializerMethodField()
+    tags_list = serializers.SerializerMethodField()
 
     class Meta:
         model = Podcast
@@ -322,6 +330,8 @@ class PodcastDetailSerializer(serializers.ModelSerializer):
             "host",
             "guests",
             "categories",
+            "tags",
+            "tags_list",
             "plays_count",
             "is_featured",
             "season",
@@ -379,8 +389,16 @@ class PodcastDetailSerializer(serializers.ModelSerializer):
             return obj.audio_file.url
         return None
 
+    def get_tags_list(self, obj):
+        """Retourne les tags sous forme de liste pour l'API"""
+        return obj.get_tags_list()
+
 
 class PodcastUploadSerializer(serializers.ModelSerializer):
+    tags_list = serializers.ListField(
+        child=serializers.CharField(), write_only=True, required=False
+    )
+
     class Meta:
         model = Podcast
         fields = [
@@ -390,10 +408,28 @@ class PodcastUploadSerializer(serializers.ModelSerializer):
             "cover_image",
             "categories",
             "guests",
+            "tags",
+            "tags_list",
             "season",
             "episode",
             "is_published",
         ]
+
+    def create(self, validated_data):
+        tags_list = validated_data.pop("tags_list", [])
+        instance = super().create(validated_data)
+        if tags_list:
+            instance.set_tags_list(tags_list)
+            instance.save()
+        return instance
+
+    def update(self, instance, validated_data):
+        tags_list = validated_data.pop("tags_list", None)
+        instance = super().update(instance, validated_data)
+        if tags_list is not None:
+            instance.set_tags_list(tags_list)
+            instance.save()
+        return instance
 
 
 class VideoListSerializer(serializers.ModelSerializer):

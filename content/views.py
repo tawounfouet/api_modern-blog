@@ -3,6 +3,7 @@ from rest_framework import viewsets, mixins, filters, status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from authentication.models import User
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Category, Tag, UserProfile, Post, Comment, Podcast, Video
@@ -76,14 +77,18 @@ class PostViewSet(viewsets.ReadOnlyModelViewSet):
         if self.action == "retrieve":
             return PostDetailSerializer
         return PostListSerializer
-    
+
     # perform_create est utilisé pour associer l'auteur du post à l'utilisateur connecté
     def perqform_create(self, serializer):
         serializer.save(author=self.request.user)
 
 
 class PodcastViewSet(viewsets.ModelViewSet):
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
     filterset_fields = [
         "categories__slug",
         "host__username",
@@ -91,7 +96,9 @@ class PodcastViewSet(viewsets.ModelViewSet):
         "season",
         "episode",
     ]
-    search_fields = ["title", "description"]
+    search_fields = ["title", "description", "tags"]
+    ordering_fields = ["published_at", "plays_count", "title"]
+    ordering = ["-published_at"]
     lookup_field = "slug"
     permission_classes = [IsAuthenticatedOrReadOnly]
 
@@ -100,11 +107,21 @@ class PodcastViewSet(viewsets.ModelViewSet):
         if self.request.user.is_authenticated and self.action in ["list", "retrieve"]:
             user_podcasts = Podcast.objects.filter(host=self.request.user)
             public_podcasts = Podcast.objects.filter(is_published=True)
-            return (
+            queryset = (
                 (user_podcasts | public_podcasts).distinct().order_by("-published_at")
             )
-        # Sinon, ne montrer que les podcasts publiés
-        return Podcast.objects.filter(is_published=True).order_by("-published_at")
+        else:
+            # Sinon, ne montrer que les podcasts publiés
+            queryset = Podcast.objects.filter(is_published=True).order_by(
+                "-published_at"
+            )
+
+        # Filter by tag if provided
+        tag = self.request.query_params.get("tag", None)
+        if tag:
+            queryset = queryset.filter(tags__icontains=tag)
+
+        return queryset
 
     def get_serializer_class(self):
         if (
@@ -148,16 +165,14 @@ class CommentViewSet(
         serializer.save(author=self.request.user)
 
 
-
-
-
 # Add these imports and view to your existing views.py
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from .tasks import test_celery_task
 
-@api_view(['GET'])
+
+@api_view(["GET"])
 @permission_classes([IsAdminUser])
 def test_celery(request):
     """
@@ -165,10 +180,31 @@ def test_celery(request):
     Only accessible to admin users.
     """
     # Schedule the task to run immediately
-    task = test_celery_task.delay(name=request.query_params.get('name', 'User'))
-    
-    return Response({
-        'message': 'Celery task triggered successfully',
-        'task_id': task.id,
-        'status': 'The task is being processed asynchronously'
-    })
+    task = test_celery_task.delay(name=request.query_params.get("name", "User"))
+
+    return Response(
+        {
+            "message": "Celery task triggered successfully",
+            "task_id": task.id,
+            "status": "The task is being processed asynchronously",
+        }
+    )
+
+
+from rest_framework.views import APIView
+
+
+class PodcastTagsView(APIView):
+    """
+    API endpoint to get all unique tags used in podcasts
+    """
+
+    def get(self, request):
+        podcasts = Podcast.objects.filter(is_published=True).exclude(tags="")
+        all_tags = set()
+
+        for podcast in podcasts:
+            tags = podcast.get_tags_list()
+            all_tags.update(tags)
+
+        return Response({"tags": sorted(list(all_tags)), "count": len(all_tags)})
